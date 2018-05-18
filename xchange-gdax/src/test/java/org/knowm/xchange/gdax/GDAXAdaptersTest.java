@@ -12,13 +12,17 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order;
 import org.knowm.xchange.dto.Order.OrderType;
+import org.knowm.xchange.dto.marketdata.OrderBook;
 import org.knowm.xchange.dto.marketdata.Ticker;
 import org.knowm.xchange.dto.trade.LimitOrder;
 import org.knowm.xchange.dto.trade.MarketOrder;
@@ -60,6 +64,24 @@ public class GDAXAdaptersTest {
 
     assertThat(GDAXAdapters.parseDate("2017-06-21T04:52:01.996Z").getTime())
         .isEqualTo(1498020721996L);
+
+    LimitOrder askOrder =
+        new LimitOrder(
+            OrderType.ASK,
+            BigDecimal.ONE,
+            CurrencyPair.BTC_USD,
+            "",
+            null,
+            BigDecimal.TEN.add(BigDecimal.ONE));
+    LimitOrder bidOrder =
+        new LimitOrder(
+            OrderType.BID, BigDecimal.ONE, CurrencyPair.BTC_USD, "", null, BigDecimal.TEN);
+
+    List<LimitOrder> asks = new ArrayList<>(Arrays.asList(askOrder));
+    List<LimitOrder> bids = new ArrayList<>(Arrays.asList(bidOrder));
+    Date timeStamp = new Date(0);
+    OrderBook orderBook = new OrderBook(timeStamp, asks, bids);
+    orderBook.setOrderBookType(false);
   }
 
   @Test

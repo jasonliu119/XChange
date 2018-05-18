@@ -38,6 +38,7 @@ public class OrderBookTest {
     List<LimitOrder> bids = new ArrayList<>(Arrays.asList(bidOrder));
     Date timeStamp = new Date(0);
     orderBook = new OrderBook(timeStamp, asks, bids);
+    orderBook.setOrderBookType(false);
   }
 
   @Test
@@ -54,6 +55,7 @@ public class OrderBookTest {
             BigDecimal.ONE);
     orderBook.update(lowerBidUpdate);
     assertThat(orderBook.getBids().size()).isEqualTo(2);
+    assertThat(orderBook.getOrderBookType()).isEqualTo(OrderBook.OrderBookType.UPDATE);
   }
 
   @Test
