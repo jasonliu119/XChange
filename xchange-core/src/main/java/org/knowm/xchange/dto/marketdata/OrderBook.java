@@ -21,6 +21,25 @@ public final class OrderBook implements Serializable {
   private final List<LimitOrder> bids;
   /** the timestamp of the orderbook according to the exchange's server, null if not provided */
   private Date timeStamp;
+  /** SNAPSHOT or UPDATE */
+  private OrderBookType type = OrderBookType.SNAPSHOT;
+
+  public enum OrderBookType {
+    SNAPSHOT,
+    UPDATE
+  }
+
+  public void setOrderBookType(boolean isSnapshot) {
+    if (isSnapshot) {
+      this.type = OrderBookType.SNAPSHOT;
+    } else {
+      this.type = OrderBookType.UPDATE;
+    }
+  }
+
+  public OrderBookType getOrderBookType() {
+    return this.type;
+  }
 
   /**
    * Constructor
