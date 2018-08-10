@@ -28,6 +28,13 @@ public final class OrderBook implements Serializable {
     SNAPSHOT,
     UPDATE
   }
+  
+  /** Some exchange like Binance has the last updated id for this orderbook */
+  private long lastUpdateId = 0;
+  
+  public void setLastUpdateId(long id) {
+	  this.lastUpdateId = id;
+  }
 
   public void setOrderBookType(boolean isSnapshot) {
     if (isSnapshot) {
